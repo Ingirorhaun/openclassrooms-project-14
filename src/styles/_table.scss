@@ -1,0 +1,50 @@
+table {
+  td,
+  th {
+    padding: 2px 3px;
+  }
+  th {
+    text-align: left;
+
+    span {
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: flex-end;
+      font-weight: 500;
+    }
+    button {
+      padding: 1px;
+      padding-block: 0;
+      padding-inline: 0;
+      border: none;
+      background: none;
+      height: 0.5em;
+
+      &:hover {
+        filter: opacity(0.6);
+      }
+
+      &.active::before {
+        color: #1c78f0;
+      }
+    }
+    .sort-buttons {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+  .arrow-up::before,
+  .arrow-down::before {
+    font-size: 0.5em;
+    position: relative;
+    top: -0.8em;
+    color: #3a3a3a;
+    cursor: pointer;
+  }
+  .arrow-up::before {
+    content: "\25B2";
+  }
+  .arrow-down:before {
+    content: "\25BC";
+  }
+}
