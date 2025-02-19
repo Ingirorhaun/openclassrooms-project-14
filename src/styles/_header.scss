@@ -1,0 +1,17 @@
+header {
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+}
+
+nav {
+  margin-top: 1rem;
+  a {
+    margin-right: 1rem;
+    text-decoration: none;
+    color: #0066cc;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
