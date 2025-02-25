@@ -7,7 +7,7 @@ export default function Modal({ title, onClose, children }) {
           &times;
         </button>
         <div className="modal-header">
-          <h2>{title}</h2>
+          {title && <h2>{title}</h2>}
         </div>
         <div className="modal-body">{children}</div>
       </div>
