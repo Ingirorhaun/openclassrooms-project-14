@@ -1,17 +1,27 @@
 header {
   padding: 1rem;
-  background-color: #f8f9fa;
-  border-bottom: 1px solid #dee2e6;
+  background-color: #2965e8;
+  height: 75px;
+
+  h1 {
+    margin: 0.5rem 0;
+    font-weight: 700;
+    color: white;
+  }
 }
 
 nav {
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   a {
     margin-right: 1rem;
     text-decoration: none;
-    color: #0066cc;
+    color: white;
     &:hover {
       text-decoration: underline;
     }
+    &.active {
+      text-decoration: underline;
+    }
   }
+  
 }
