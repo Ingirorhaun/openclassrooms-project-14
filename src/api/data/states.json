@@ -1,4 +1,4 @@
-export const states = [
+[
     {
         "label": "Alabama",
         "value": "AL"
@@ -235,4 +235,4 @@ export const states = [
         "label": "Wyoming",
         "value": "WY"
     }
-];
+]
