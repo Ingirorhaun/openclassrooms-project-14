@@ -1,11 +1,11 @@
 import DropdownSelect from "./DropdownSelect";
 import { useEffect, useState } from "react";
-import { getStatesList, saveNewEmployee } from "../api/api";
-import { departments } from "../api/departments";
+import { getStatesList, saveNewEmployee, getDepartmentsList } from "../api/api";
 import Modal from "./Modal";
 
 export default function EmployeeCreationForm() {
   const [states, setStates] = useState([]);
+  const [departments, setDepartments] = useState([]);
   const [employee, setEmployee] = useState({
     firstName: "",
     lastName: "",
@@ -43,10 +43,10 @@ export default function EmployeeCreationForm() {
   const formatDate = (dateString) => {
     const [year, month, day] = dateString.split("-");
     return `${day}/${month}/${year}`;
-  }
+  };
 
   /**
-   * 
+   *
    */
   const createEmployee = async (e) => {
     e.preventDefault();
@@ -58,9 +58,9 @@ export default function EmployeeCreationForm() {
       startDate: formatDate(employee.startDate),
       street: employee.street,
       city: employee.city,
-      state: employee.state || states[0]?.value,
+      state: employee.state,
       zip: employee.zip,
-      department: employee.department || departments[0]?.value,
+      department: employee.department,
     };
     const result = await saveNewEmployee(newEmployee);
     if (!(result instanceof Error)) {
@@ -77,7 +77,12 @@ export default function EmployeeCreationForm() {
       const states = await getStatesList();
       setStates(states);
     };
+    const fetchDepartments = async () => {
+      const departments = await getDepartmentsList();
+      setDepartments(departments);
+    };
     fetchStates();
+    fetchDepartments();
   }, []);
 
   return (
@@ -142,7 +147,7 @@ export default function EmployeeCreationForm() {
         <DropdownSelect
           name={"state"}
           options={states}
-          onChange={handleChange}
+          onSelect={handleChange}
         />
         <label htmlFor="zip">Zip</label>
         <input
@@ -156,16 +161,12 @@ export default function EmployeeCreationForm() {
         <DropdownSelect
           name={"department"}
           options={departments}
-          onChange={handleChange}
+          onSelect={handleChange}
         />
         <button
           type="submit"
-          disabled={Object.entries(employee).some(([key, value]) => {
-            if (key === "state" || key === "department") {
-              return false;
-            } else {
-              return !value;
-            }
+          disabled={Object.values(employee).some((value) => {
+            return !value;
           })}
         >
           Save
