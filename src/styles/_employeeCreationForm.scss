@@ -1,28 +1,43 @@
 .form-wrapper {
-    max-width: 300px;
+  max-width: 32rem;
+  margin: 50px auto;
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  form {
+    padding: 2rem;
     margin: 0 auto;
-    form {
-        padding: 2rem;
-        margin: 0 auto;
-        display: flex;
-        flex-direction: column;
-    
-        h3 {
-            margin-bottom: 0;
-        }
+    display: flex;
+    flex-direction: column;
 
-        input{
-            max-width: 200px;
-        }
-
-        button{
-            margin-top: 20px;
-            max-width: 208px;
-        }
-
-        select {
-            padding: 1px 2px;
-            max-width: 208px;
-        }
+    h2 {
+      text-align: center;
+      color: #333;
     }
+
+    button {
+      max-width: 100%;
+      background-color: #007bff;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 2em;
+
+      &:disabled {
+        background-color: #ccc;
+      }
+    }
+
+    input,
+    select {
+      padding: 10px;
+      margin: 5px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+  }
 }
