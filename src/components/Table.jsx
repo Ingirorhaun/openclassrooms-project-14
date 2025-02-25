@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { PropTypes } from "prop-types";
+import { SortButtons } from "./SortButtons";
+import { toCamelCase } from "../utils";
 /**
  * A table with pagination and sorting capabilities
  */
-export default function Table({ items }) {
+export default function Table({ items, sortFn }) {
   const [sortField, setSortField] = useState("");
   const [sortDirection, setSortDirection] = useState("");
   const [sortedItems, setSortedItems] = useState();
@@ -23,86 +25,14 @@ export default function Table({ items }) {
     });
   }
 
-  const toCamelCase = (str) => {
-    return str
-      .split(" ")
-      .map((word, index) => {
-        if (index === 0) {
-          return word.toLowerCase();
-        }
-        return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-      })
-      .join("");
-  };
-
-  const sort = (field, direction) => {
-    // Convert field header back to object key format
+  const handleSort = (field, direction) => {
     const key = toCamelCase(field);
     setSortField(key);
-    // Toggle sort direction if same field is clicked
     setSortDirection(direction);
-
-    const parseDateString = (dateStr) => {
-      const [day, month, year] = dateStr.split("/");
-      return new Date(year, month - 1, day).getTime();
-    };
-
-    const updatedSortedItems = [...sortedItems].sort((a, b) => {
-      const valA = a[key];
-      const valB = b[key];
-
-      //Sort dates
-      if (key === "startDate" || key === "dateOfBirth") {
-        const dateA = parseDateString(valA);
-        const dateB = parseDateString(valB);
-        return direction === "asc" ? dateA - dateB : dateB - dateA;
-      }
-      //Sort numbers
-      if (!isNaN(valA) && !isNaN(valB)) {
-        return direction === "asc"
-          ? Number(valA) - Number(valB)
-          : Number(valB) - Number(valA);
-      }
-
-      //Sort strings
-      const stringA = String(valA).toLowerCase();
-      const stringB = String(valB).toLowerCase();
-
-      if (direction === "asc") {
-        return stringA.localeCompare(stringB);
-      }
-      return stringB.localeCompare(stringA);
-    });
-
-    setSortedItems(updatedSortedItems);
+    sortFn(key, direction);
   };
 
-  //Create arrow buttons to be added to the table headers
-  const ArrowButtons = ({ header, sort }) => {
-    const key = toCamelCase(header);
-    const isActive = sortField === key;
-    return (
-      <div className="sort-buttons">
-        <button
-          className={`arrow-up ${
-            isActive && sortDirection === "asc" ? "active" : ""
-          }`}
-          onClick={() => sort(header, "asc")}
-        />
-        <button
-          className={`arrow-down ${
-            isActive && sortDirection === "desc" ? "active" : ""
-          }`}
-          onClick={() => sort(header, "desc")}
-        />
-      </div>
-    );
-  };
-  //Arrow buttons prop types
-  ArrowButtons.propTypes = {
-    header: PropTypes.string.isRequired,
-    sort: PropTypes.func.isRequired,
-  };
+  
   return (
     <table>
       <thead>
@@ -111,7 +41,7 @@ export default function Table({ items }) {
             headersWithSpaces.map((header) => (
               <th key={header}>
                 <span>
-                  <ArrowButtons header={header} sort={sort} />
+                  <SortButtons header={header} sortFn={handleSort} sortField={sortField} sortDirection={sortDirection} />
                   {header}
                 </span>
               </th>
@@ -147,4 +77,5 @@ Table.propTypes = {
       zipCode: PropTypes.string.isRequired,
     })
   ).isRequired,
+  sortFn: PropTypes.func.isRequired,
 };
