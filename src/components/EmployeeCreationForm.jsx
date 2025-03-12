@@ -1,7 +1,7 @@
-import DropdownSelect from "./DropdownSelect";
 import { useEffect, useState } from "react";
 import { getStatesList, saveNewEmployee, getDepartmentsList } from "../api/api";
 import Modal from "./Modal";
+import DropdownSelect from "@ingirorhaun/oc-react-dropdown-select"
 
 export default function EmployeeCreationForm() {
   const [states, setStates] = useState([]);
@@ -145,7 +145,7 @@ export default function EmployeeCreationForm() {
         />
         <label htmlFor="state">State</label>
         <DropdownSelect
-          name={"state"}
+          id={"state"}
           options={states}
           onSelect={handleChange}
         />
@@ -159,7 +159,7 @@ export default function EmployeeCreationForm() {
         />
         <label htmlFor="department">Department</label>
         <DropdownSelect
-          name={"department"}
+          id={"department"}
           options={departments}
           onSelect={handleChange}
         />
