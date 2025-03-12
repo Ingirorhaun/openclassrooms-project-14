@@ -11,7 +11,7 @@ describe("Modal Component", () => {
     );
 
     expect(screen.getByText("Test Modal")).toBeInTheDocument();
-    expect(screen.getByText("Test Content")).toBeInTheDocument();
+    expect(screen.getByText("Test content")).toBeInTheDocument();
   });
 
   it("calls onClose when the close button is clicked", () => {
